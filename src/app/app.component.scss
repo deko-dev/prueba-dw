@@ -1,0 +1,12 @@
+.imgs-theme {
+    padding-top: 0.2rem;
+    transition: 500ms;
+    transform: rotate(180deg);
+    &.dark{
+        transform: rotate(0deg);
+    }
+    .img-moon{
+        transform: rotate(180deg);
+        margin-bottom: 0.2rem;
+    }
+}
