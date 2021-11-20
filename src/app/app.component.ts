@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'prueba';
+
+  setTheme(theme: string){
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? theme = 'dark' : theme = 'light';
+    console.log(theme);
+  }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModules } from './material/index';
+import { PipesModule } from './pipes/pipes.module';
 
 
 
@@ -14,7 +15,12 @@ import { MaterialModules } from './material/index';
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    MaterialModules
+
+    // Material
+    MaterialModules,
+
+    // Pipes
+    PipesModule
   ],
   exports: [
     ReactiveFormsModule,
@@ -23,6 +29,9 @@ import { MaterialModules } from './material/index';
 
     // Material
     MaterialModules,
+
+    // Pipes
+    PipesModule
   ]
 })
 export class SharedModule { }
