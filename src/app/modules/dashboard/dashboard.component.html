@@ -1,0 +1,34 @@
+<mat-drawer-container class="min-h-screen bg-secondary-light dark:bg-secondary-dark" autosize [hasBackdrop]="true">
+    <mat-drawer #drawer mode="over" class="bg-primary-light dark:bg-primary-dark w-7/12 sm:w-4/12 md:w-3/12">
+        <div class="header-sidenav w-full h-40 flex flex-col justify-end items-center">
+            <img src="assets/images/icons/user.png" class="w-14 h-14 rounded-full relative top-4 sm:w-16 sm:h-16 sm:top-8">
+        </div>
+        <div class="navigation w-full flex flex-col justify-between items-center gap-3 py-5 mt-5">
+            <ng-container *ngFor="let item of sidenavItems">
+                <div 
+                    [ngClass]="{
+                        'bg-secondary-light dark:bg-secondary-dark text-secondary-dark dark:text-secondary-light': item.path !== currentPath,
+                        'bg-secondary-dark dark:bg-secondary-light text-secondary-light dark:text-secondary-dark': item.path === currentPath
+                    }"
+                    class="item-navigation w-10/12 h-12 mx-auto rounded-lg text-secondary-dark dark:text-secondary-light flex flex-row justify-start items-center gap-4 py-2 px-5 cursor-pointer" 
+                    (click)="onRedirectTo(item.path)"
+                >
+                    <mat-icon class="w-6 h-6 text-2xl flex flex-col justify-center items-center">{{ item.icon }}</mat-icon>
+                    <h3 class="m-0 text-sm sm:text-base md:text-lg font-semibold text-center">{{ item.name }}</h3>
+                </div>
+            </ng-container>
+            
+        </div>
+    </mat-drawer>
+
+    <div>
+        <mat-toolbar class="bg-primary-light dark:bg-primary-dark pl-1">
+            <button type="button" mat-icon-button (click)="drawer.toggle()">
+                <mat-icon class="text-secondary-dark dark:text-secondary-light">menu</mat-icon>
+            </button>
+            <h2 class="text-xl sm:text-2xl font-bold text-primary-dark dark:text-primary-light">AeroAlquiler</h2>
+        </mat-toolbar>
+
+        <router-outlet></router-outlet>
+    </div>
+</mat-drawer-container>
