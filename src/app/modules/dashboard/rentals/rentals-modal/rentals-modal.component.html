@@ -1,0 +1,157 @@
+<div
+    class="w-full overflow-hidden bg-secondary-light dark:bg-secondary-dark p-4 text-primary-dark dark:text-primary-light">
+    <h2 class="text-2xl font-bold md:text-5xl m-0 mt-2">Gestion de Alquileres</h2>
+    <!-- Sign in form -->
+    <form class="mt-8 flex flex-col justify-between items-center gap-3" [formGroup]="rentalForm" #signInNgForm="ngForm">
+        <!-- Location field -->
+        <div class="field w-full mb-4">
+            <label for="location" class="text-base mb-1 font-medium">Destino</label>
+            <div
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light">
+                <div
+                    class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>place</mat-icon>
+                </div>
+                <input id="location" name="location" formControlName="location" type="text"
+                    class="w-10/12 bg-transparent outline-none pl-2 text-base text-secondary-dark dark:text-secondary-light sm:text-lg">
+            </div>
+            <mat-hint *ngIf="
+                    formField('location')?.errors &&
+                    formField('location')?.touched
+                " class="text-red-400 text-xs italic">{{ formField("location")?.errors | formControlError }}</mat-hint>
+        </div>
+
+        <!-- Departure field -->
+        <div class="field w-full mb-4">
+            <label for="departure_date" class="text-base mb-1 font-medium">Fecha de Salida</label>
+            <div
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light">
+                <div
+                    class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>event</mat-icon>
+                </div>
+                <input formControlName="departure_date" matInput [matDatepicker]="departure_date" class="w-10/12 bg-transparent outline-none pl-2 text-base text-secondary-dark dark:text-secondary-light sm:text-lg">
+                <mat-datepicker-toggle class="w-2/12 h-full flex flex-col justify-center items-center text-primary-dark dark:text-primary-light" matSuffix [for]="departure_date"></mat-datepicker-toggle>
+                <mat-datepicker #departure_date>
+                    <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel class="bg-secondary-light dark:bg-secondary-dark text-primary-dark dark:text-primary-light">Cerrar</button>
+                        <button mat-raised-button matDatepickerApply class="bg-secondary-light dark:bg-secondary-dark text-primary-dark dark:text-primary-light">Aplicar</button>
+                    </mat-datepicker-actions>
+                </mat-datepicker>
+            </div>
+            <mat-hint *ngIf="
+                    formField('departure_date')?.errors &&
+                    formField('departure_date')?.touched
+                " class="text-red-400 text-xs italic">{{ formField("departure_date")?.errors | formControlError }}
+            </mat-hint>
+        </div>
+
+        <!-- Arrival Date field -->
+        <div class="field w-full mb-4">
+            <label for="arrival_Date" class="text-base mb-1 font-medium">Fecha de Llegada</label>
+            <div
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light">
+                <div
+                    class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>event</mat-icon>
+                </div>
+                <input formControlName="arrival_date" matInput [matDatepicker]="arrival_date" class="w-10/12 bg-transparent outline-none pl-2 text-base text-secondary-dark dark:text-secondary-light sm:text-lg">
+                <mat-datepicker-toggle class="w-2/12 h-full flex flex-col justify-center items-center text-primary-dark dark:text-primary-light" matSuffix [for]="arrival_date"></mat-datepicker-toggle>
+                <mat-datepicker #arrival_date>
+                    <mat-datepicker-actions>
+                        <button mat-button matDatepickerCancel class="bg-secondary-light dark:bg-secondary-dark text-primary-dark dark:text-primary-light">Cerrar</button>
+                        <button mat-raised-button matDatepickerApply class="bg-secondary-light dark:bg-secondary-dark text-primary-dark dark:text-primary-light">Aplicar</button>
+                    </mat-datepicker-actions>
+                </mat-datepicker>
+            </div>
+            <mat-hint *ngIf="
+                    formField('arrival_Date')?.errors &&
+                    formField('arrival_Date')?.touched
+                " class="text-red-400 text-xs italic">{{ formField("arrival_Date")?.errors | formControlError }}
+            </mat-hint>
+        </div>
+
+        <!-- Aircraft field -->
+        <div class="field w-full mb-4">
+            <label for="aircraft_id" class="text-base mb-1 font-medium">Aeronave</label>
+            <div
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light">
+                <div
+                    class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>rocket</mat-icon>
+                </div>
+                <mat-select [formControlName]="'aircraft_id'"
+                    class="w-10/12 h-full bg-transparent outline-none pl-2 text-base ng-deep::text-secondary-dark ::ng-deep:dark:text-secondary-light  sm:text-lg flex flex-col justify-center items-center">
+                    <mat-option *ngFor="let aircraft of selectAircrafts" [value]="aircraft._id"
+                        class="bg-primary-light dark:bg-primary-dark">
+                        <span class="text-secondary-dark dark:text-secondary-light">{{ aircraft.code_ref }} {{ aircraft.name }}</span>
+                    </mat-option>
+                </mat-select>
+            </div>
+            <mat-hint *ngIf="
+                    formField('aircraft_id')?.errors &&
+                    formField('aircraft_id')?.touched
+                " class="text-red-400 text-xs italic">{{ formField("aircraft_id")?.errors | formControlError }}</mat-hint>
+        </div>
+
+        <!-- Pilot field -->
+        <div class="field w-full mb-4">
+            <label for="pilot_id" class="text-base mb-1 font-medium">Piloto</label>
+            <div
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light">
+                <div
+                    class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>person</mat-icon>
+                </div>
+                <mat-select [formControlName]="'pilot_id'"
+                    class="w-10/12 h-full bg-transparent outline-none pl-2 text-base ng-deep::text-secondary-dark ::ng-deep:dark:text-secondary-light  sm:text-lg flex flex-col justify-center items-center"
+                    #selectPilot>
+                    <mat-option *ngFor="let pilot of selectPilots" [value]="pilot._id"
+                        class="bg-primary-light dark:bg-primary-dark">
+                        <span class="text-secondary-dark dark:text-secondary-light">{{ pilot.name }} {{ pilot.lastname
+                            }}</span>
+                    </mat-option>
+                </mat-select>
+            </div>
+            <mat-hint *ngIf="
+                    formField('pilot_id')?.errors &&
+                    formField('pilot_id')?.touched
+                " class="text-red-400 text-xs italic">{{ formField("pilot_id")?.errors | formControlError }}</mat-hint>
+        </div>
+
+        <!-- Passanger field -->
+        <div class="field w-full mb-4">
+            <label for="passenger_ids" class="text-base mb-1 font-medium">Pasajeros</label>
+            <div
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light">
+                <div
+                    class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>person</mat-icon>
+                </div>
+                <mat-select [formControlName]="'passenger_ids'" [multiple]="true"
+                    class="w-10/12 h-full bg-transparent outline-none pl-2 text-base ng-deep::text-secondary-dark ::ng-deep:dark:text-secondary-light  sm:text-lg flex flex-col justify-center items-center">
+                    <mat-option *ngFor="let passanger of selectPassangers" [value]="passanger._id"
+                        class="bg-primary-light dark:bg-primary-dark">
+                        <span class="text-secondary-dark dark:text-secondary-light">{{ passanger.name }} {{ passanger.lastname
+                            }}</span>
+                    </mat-option>
+                </mat-select>
+            </div>
+            <mat-hint *ngIf="
+                    formField('passenger_ids')?.errors &&
+                    formField('passenger_ids')?.touched
+                " class="text-red-400 text-xs italic">{{ formField("passenger_ids")?.errors | formControlError }}</mat-hint>
+        </div>
+
+        <!-- Submit button -->
+        <button class="w-full mt-6 t text-primary-light dark:text-secondary-dark" [ngClass]="{
+                'bg-gray-400 text-secondary-dark': signInNgForm.invalid, 
+                'bg-secondary-dark dark:bg-secondary-light': signInNgForm.valid
+            }" mat-raised-button (click)="onSubmit($event)" [disabled]="signInNgForm.invalid"
+            *ngIf="!data || data.action === actions.UPDATE">
+            <span *ngIf="!rentalForm.disabled">{{textButtonSubmit}}</span>
+            <mat-progress-spinner *ngIf="rentalForm.disabled" [diameter]="24" [mode]="'indeterminate'">
+            </mat-progress-spinner>
+        </button>
+    </form>
+</div>

@@ -51,3 +51,14 @@ export interface User {
     createdAt: Date;
     updatedAt: Date;
 }
+
+// Interface for Rentals
+export interface Rental {
+    _id: string;
+    location: string;
+    arrival_date: Date;
+    departure_date: Date;
+    aircraft_id: string;
+    pilot_id: string;
+    passenger_ids: string[];
+}

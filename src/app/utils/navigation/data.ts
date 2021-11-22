@@ -30,4 +30,11 @@ export const Navigation: NavigationTypeItem[] = [
         icon: "perm_identity",
         roles: ["admin", "passenger"]
     },
+    {
+        id: "rentals",
+        name: "Rentals",
+        path: "rentals",
+        icon: "paid",
+        roles: ["admin", "pilot", "passenger"]
+    },
 ]
