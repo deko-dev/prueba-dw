@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth.service';
+import { MsgBoxService } from '../../shared/msg-box/msg-box.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -20,7 +21,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private _msgBox: MsgBoxService
   ) { }
 
   ngOnInit(): void {
@@ -73,8 +75,8 @@ export class SignInComponent implements OnInit {
       // localStorage.setItem('user', JSON.stringify(responseLogin.user));
       // Redirect to dashboard
       this.router.navigateByUrl('dashboard/roles');
-    } catch (error) {
-      
+    } catch (error: any) {
+      this._msgBox.Snack( error.error.message, 'X');
     }
   }
 

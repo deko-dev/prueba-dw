@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 // Routing Root
 import { AppRoutes } from './app.routing';
 import { SharedModule } from './shared/shared.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/auth/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,13 @@ import { SharedModule } from './shared/shared.module';
     RouterModule.forRoot(AppRoutes),
     SharedModule
   ],
-  providers: [],
+  providers: [
+    {
+        provide : HTTP_INTERCEPTORS,
+        useClass: AuthInterceptor,
+        multi   : true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

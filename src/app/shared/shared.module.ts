@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModules } from './material/index';
 import { PipesModule } from './pipes/pipes.module';
+import { MsgBoxModule } from './msg-box/msg-box.module';
 
 
 
@@ -20,7 +21,10 @@ import { PipesModule } from './pipes/pipes.module';
     MaterialModules,
 
     // Pipes
-    PipesModule
+    PipesModule,
+
+    // MsgBoxService
+    MsgBoxModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -31,7 +35,10 @@ import { PipesModule } from './pipes/pipes.module';
     MaterialModules,
 
     // Pipes
-    PipesModule
+    PipesModule,
+
+    // MsgBoxService
+    MsgBoxModule,
   ]
 })
 export class SharedModule { }

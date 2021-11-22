@@ -1,0 +1,126 @@
+<div class="w-full overflow-hidden bg-secondary-light dark:bg-secondary-dark p-4 text-primary-dark dark:text-primary-light">
+    <h2 class="text-2xl font-bold md:text-5xl m-0 mt-2">Gestion de Aeronaves</h2>
+    <!-- Sign in form -->
+    <form class="mt-8 flex flex-col justify-between items-center gap-3" [formGroup]="aircraftForm" #signInNgForm="ngForm">
+        <!-- Code Ref field -->
+        <div class="field w-full mb-4">
+            <label for="code_ref" class="text-base mb-1 font-medium">CODE_REF</label>
+            <div 
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light"
+            >
+                <div class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>rocket</mat-icon>
+                </div>
+                <input 
+                    id="code_ref"
+                    name="code_ref"
+                    formControlName="code_ref"
+                    type="text"
+                    class="w-10/12 bg-transparent outline-none pl-2 text-base text-secondary-dark dark:text-secondary-light sm:text-lg"
+                >
+            </div>
+            <mat-hint
+                *ngIf="
+                    formField('code_ref')?.errors &&
+                    formField('code_ref')?.touched
+                "
+                class="text-red-400 text-xs italic"
+            >{{ formField("code_ref")?.errors | formControlError }}</mat-hint>
+        </div>
+        
+        <!-- Name field -->
+        <div class="field w-full mb-4">
+            <label for="name" class="text-base mb-1 font-medium">Nombre</label>
+            <div 
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light"
+            >
+                <div class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>rocket</mat-icon>
+                </div>
+                <input 
+                    id="name"
+                    name="name"
+                    formControlName="name"
+                    type="text"
+                    class="w-10/12 bg-transparent outline-none pl-2 text-base text-secondary-dark dark:text-secondary-light sm:text-lg"
+                >
+            </div>
+            <mat-hint
+                *ngIf="
+                    formField('name')?.errors &&
+                    formField('name')?.touched
+                "
+                class="text-red-400 text-xs italic"
+            >{{ formField("name")?.errors | formControlError }}</mat-hint>
+        </div>
+        
+        <!-- Capacity field -->
+        <div class="field w-full mb-4">
+            <label for="cant_passagers" class="text-base mb-1 font-medium">Capacidad Max.</label>
+            <div 
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light"
+            >
+                <div class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>rocket</mat-icon>
+                </div>
+                <input 
+                    id="cant_passagers"
+                    name="cant_passagers"
+                    formControlName="cant_passagers"
+                    type="number"
+                    class="w-10/12 bg-transparent outline-none pl-2 text-base text-secondary-dark dark:text-secondary-light sm:text-lg"
+                >
+            </div>
+            <mat-hint
+                *ngIf="
+                    formField('cant_passagers')?.errors &&
+                    formField('cant_passagers')?.touched
+                "
+                class="text-red-400 text-xs italic"
+            >{{ formField("cant_passagers")?.errors | formControlError }}</mat-hint>
+        </div>
+
+        <!-- Pilot field -->
+        <div class="field w-full mb-4">
+            <label for="pilot_id" class="text-base mb-1 font-medium">Piloto</label>
+            <div 
+                class="w-full h-14 flex flex-row justify-between items-stretch border-2 border-solid border-secondary-dark rounded-lg overflow-hidden dark:border-secondary-light"
+            >
+                <div class="w-2/12 h-full flex flex-col justify-center items-center bg-primary-light dark:bg-primary-dark">
+                    <mat-icon>rocket</mat-icon>
+                </div>
+                <mat-select [formControlName]="'pilot_id'" class="w-10/12 h-full bg-transparent outline-none pl-2 text-base ng-deep::text-secondary-dark ::ng-deep:dark:text-secondary-light  sm:text-lg flex flex-col justify-center items-center" #selectPilot>
+                    <mat-option *ngFor="let pilot of selectPilots" [value]="pilot._id" class="bg-primary-light dark:bg-primary-dark">
+                        <span class="text-secondary-dark dark:text-secondary-light">{{ pilot.name }} {{ pilot.lastname }}</span>
+                    </mat-option>
+                </mat-select>
+            </div>
+            <mat-hint
+                *ngIf="
+                    formField('pilot_id')?.errors &&
+                    formField('pilot_id')?.touched
+                "
+                class="text-red-400 text-xs italic"
+            >{{ formField("pilot_id")?.errors | formControlError }}</mat-hint>
+        </div>
+
+        <!-- Submit button -->
+        <button
+            class="w-full mt-6 t text-primary-light dark:text-secondary-dark"
+            [ngClass]="{
+                'bg-gray-400 text-secondary-dark': signInNgForm.invalid, 
+                'bg-secondary-dark dark:bg-secondary-light': signInNgForm.valid
+            }"
+            mat-raised-button
+            (click)="onSubmit($event)"
+            [disabled]="signInNgForm.invalid"
+        >
+            <span *ngIf="!aircraftForm.disabled">{{textButtonSubmit}}</span>
+            <mat-progress-spinner
+                *ngIf="aircraftForm.disabled"
+                [diameter]="24"
+                [mode]="'indeterminate'"
+            ></mat-progress-spinner>
+        </button>
+    </form>
+</div>

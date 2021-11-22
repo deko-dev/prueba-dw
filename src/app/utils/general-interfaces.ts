@@ -22,3 +22,32 @@ export interface Role {
     description: string;
     profile: Profile
 }
+
+// Interface for Aircrafts
+export interface Aircraft {
+    _id: string;
+    code_ref: string;
+    name: string;
+    cant_passagers: string;
+    is_available: string;
+    pilot_id: Object;
+}
+
+// Interface of Response with data from API
+export interface ResponseData<T> {
+    status: number;
+    message: string;
+    data: T;
+}
+
+// Interface users of the application
+export interface User {
+    _id: string;
+    name: string;
+    lastname: string;
+    email: string;
+    password: string;
+    rol: string;
+    createdAt: Date;
+    updatedAt: Date;
+}

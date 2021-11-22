@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationTypeItem } from 'src/app/utils/general-interfaces';
 import { Navigation } from 'src/app/utils/navigation/data';
@@ -18,17 +18,25 @@ export class DashboardComponent implements OnInit {
   public readonly sidenavItems: NavigationTypeItem[] = Navigation;
 
   // Variable for sabe the current path
-  public currentPath: any = this._aRoute.snapshot.children[0].url[0].path;
+  public currentPath: any;
 
   constructor(
     private _router: Router,
-    private _aRoute: ActivatedRoute
+    private _aRoute: ActivatedRoute,
+    private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    console.log(this.currentPath);
+    // Save the current path
+    this.currentPath = this.getCurrentPath();
   } 
 
+  /**
+   * Method for get the current path
+   */
+  public getCurrentPath(): string {
+    return this._aRoute.snapshot.children[0].url[0].path
+  }
 
   /**
    * Method for redirect to the page
@@ -37,15 +45,19 @@ export class DashboardComponent implements OnInit {
    * @return void
    */
   public onRedirectTo(path: string): void {
-    // TODO: Testing
-    console.log(path);
     // Validate if the path is not empty
     if(path.length === 0){
       return;
     }
-
+    // Validate if current path is the same of the path
+    if(this.currentPath === path){
+      return;
+    }
     // Redirect to the path
-    // this._router.navigateByUrl(path);
+    this._router.navigateByUrl(`dashboard/${path}`);
+    // Save the current path
+    this.currentPath = path;
+    this.changeDetector.markForCheck();
   }
 
   /**

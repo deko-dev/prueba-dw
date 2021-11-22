@@ -16,4 +16,11 @@ export const Navigation: NavigationTypeItem[] = [
         icon: "engineering",
         roles: ["admin"]
     },
+    {
+        id: "aircrafts",
+        name: "Aeronaves",
+        path: "aircrafts",
+        icon: "rocket",
+        roles: ["admin"]
+    },
 ]

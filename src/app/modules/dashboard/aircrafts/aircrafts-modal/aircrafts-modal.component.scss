@@ -1,0 +1,14 @@
+::ng-deep{
+    body{
+        .mat-select-value{
+            color: var(--secondary-dark) !important;
+        }
+        &.dark{
+            .mat-select-value{
+                padding:1rem;
+                color: var(--secondary-light);
+            }
+
+        }
+    }
+}
