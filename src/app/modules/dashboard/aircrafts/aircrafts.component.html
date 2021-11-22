@@ -1,5 +1,7 @@
 <ng-container *ngIf="contentReady; else contentNoReady">
-    <button mat-raised-button class="block w-auto ml-auto mr-4 my-4 text-primary-light dark:text-secondary-dark bg-secondary-dark dark:bg-secondary-light" (click)="onManagementAircrats()">
+    <button mat-raised-button class="block w-auto ml-auto mr-4 my-4 text-primary-light dark:text-secondary-dark bg-secondary-dark dark:bg-secondary-light" (click)="onManagementAircrats()"
+        *ngIf="user.rol === 'admin'"
+    >
         <mat-icon>add</mat-icon>
         Nueva Aeronave
     </button>
@@ -10,14 +12,20 @@
                 <mat-icon class="text-4xl w-9 h-9">rocket</mat-icon>
                 <h2 class="m-0 text-base sm:text-2xl">{{  aircraft.code_ref}}</h2>
                 <h3 class="m-0 text-sm sm:text-xl font-normal">{{ aircraft.name }}</h3>
-                <div class="actions w-10/12 flex flex-row justify-between items-center">
+                <div 
+                    class="actions w-10/12 flex flex-row items-center"
+                    [ngClass]="{
+                        'justify-center': user.rol !== 'admin',
+                        'justify-between': user.rol === 'admin'
+                    }"
+                >
                     <button mat-icon-button class="text-primary-dark dark:text-primary-light flex flex-col justify-center items-center">
                         <mat-icon class="text-xl sm:text-2xl w-5 sm:w-6 h-5 sm:h-6" (click)="onManagementAircrats({action: actions.PREVIEW, aircraft})">visibility</mat-icon>
                     </button>
-                    <button mat-icon-button class="text-primary-dark dark:text-primary-light flex flex-col justify-center items-center">
+                    <button *ngIf="user.rol === 'admin'" mat-icon-button class="text-primary-dark dark:text-primary-light flex flex-col justify-center items-center">
                         <mat-icon class="text-xl sm:text-2xl w-5 sm:w-6 h-5 sm:h-6" (click)="onManagementAircrats({action: actions.UPDATE, aircraft})">edit</mat-icon>
                     </button>
-                    <button mat-icon-button class="text-primary-dark dark:text-primary-light flex flex-col justify-center items-center" (click)="onDeleteAircraft(aircraft)">
+                    <button *ngIf="user.rol === 'admin'" mat-icon-button class="text-primary-dark dark:text-primary-light flex flex-col justify-center items-center" (click)="onDeleteAircraft(aircraft)">
                         <mat-icon class="text-xl sm:text-2xl w-5 sm:w-6 h-5 sm:h-6">delete</mat-icon>
                     </button>
                 </div>

@@ -79,6 +79,7 @@ export class AuthService {
     localStorage.removeItem('expire_in');
     // Remove data user of local storage
     localStorage.removeItem('user');
+    // Redirect to the login page
     this.router.navigateByUrl('/auth/sign-in');
   }
 }

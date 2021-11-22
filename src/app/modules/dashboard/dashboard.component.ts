@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationTypeItem } from 'src/app/utils/general-interfaces';
 import { Navigation } from 'src/app/utils/navigation/data';
 import { environment } from '../../../environments/environment';
+import { User } from '../../utils/general-interfaces';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,9 @@ export class DashboardComponent implements OnInit {
   // Variable for sabe the current path
   public currentPath: any;
 
+  // Constante for save user in session
+  public user!: User;
+
   constructor(
     private _router: Router,
     private _aRoute: ActivatedRoute,
@@ -29,6 +33,10 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     // Save the current path
     this.currentPath = this.getCurrentPath();
+
+    // Save user in session
+    const userInSession: any = localStorage.getItem('user');
+    this.user = JSON.parse(userInSession);
   } 
 
   /**
@@ -80,5 +88,15 @@ export class DashboardComponent implements OnInit {
     localStorage.removeItem('user');
     // Redirect to the login page
     this._router.navigateByUrl('/auth/sign-in');
+  }
+
+  /**
+   * Method for valdiate if user have permissions of item
+   * @param roles: string[]
+   */
+  public validateItem(roles: string[]) {
+    // Find the user role in roles
+    const exists = roles.find( rol => rol === this.user.rol);
+    return exists ? true : false;
   }
 }

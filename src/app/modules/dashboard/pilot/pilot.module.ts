@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PilotComponent } from './pilot.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { Routes, RouterModule } from '@angular/router';
+import { PilotModalComponent } from './pilot-modal/pilot-modal.component';
 
 const pilotRoutes: Routes = [
   {
@@ -13,7 +14,8 @@ const pilotRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    PilotComponent
+    PilotComponent,
+    PilotModalComponent
   ],
   imports: [
     CommonModule,

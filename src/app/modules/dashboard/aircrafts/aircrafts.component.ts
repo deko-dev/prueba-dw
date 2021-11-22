@@ -4,6 +4,7 @@ import { AircraftsService } from './aircrafts.service';
 import { MsgBoxService } from '../../../shared/msg-box/msg-box.service';
 import { AircraftsModalComponent } from './aircrafts-modal/aircrafts-modal.component';
 import { ACTIONS } from 'src/app/utils/constants';
+import { User } from '../../../utils/general-interfaces';
 
 export interface AircraftAction {
   action: ACTIONS;
@@ -26,6 +27,9 @@ export class AircraftsComponent implements OnInit {
   // Constante for actions
   public actions = ACTIONS; 
 
+  // Constante for save user in session
+  public user!: User;
+
   constructor(
     private _aircraftsService: AircraftsService,
     private _msgBox: MsgBoxService,
@@ -35,6 +39,10 @@ export class AircraftsComponent implements OnInit {
   ngOnInit(): void {
     // Get list of aircrafts
     this.getAircrafts();
+    
+    // Save user in session
+    const userInSession: any = localStorage.getItem('user');
+    this.user = JSON.parse(userInSession);
   }
 
 

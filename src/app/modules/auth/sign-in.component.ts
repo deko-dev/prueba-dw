@@ -72,7 +72,7 @@ export class SignInComponent implements OnInit {
       // Save expiration date in local storage
       localStorage.setItem('expire_in', responseLogin.expire_in);
       // Save user in local storage
-      // localStorage.setItem('user', JSON.stringify(responseLogin.user));
+      localStorage.setItem('user', JSON.stringify(responseLogin.user));
       // Redirect to dashboard
       this.router.navigateByUrl('dashboard/roles');
     } catch (error: any) {

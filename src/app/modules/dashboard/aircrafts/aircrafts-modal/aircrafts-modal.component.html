@@ -114,6 +114,7 @@
             mat-raised-button
             (click)="onSubmit($event)"
             [disabled]="signInNgForm.invalid"
+            *ngIf="!data || data.action === actions.UPDATE"
         >
             <span *ngIf="!aircraftForm.disabled">{{textButtonSubmit}}</span>
             <mat-progress-spinner

@@ -1,28 +1,23 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { User } from 'src/app/utils/general-interfaces';
-import { PilotService } from '../../pilot/pilot.service';
+import { ACTIONS } from '../../../../utils/constants';
 import { MsgBoxService } from '../../../../shared/msg-box/msg-box.service';
-import { AircraftsService } from '../aircrafts.service';
-import { AircraftAction } from '../aircrafts.component';
+import { PilotService } from '../pilot.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ACTIONS } from 'src/app/utils/constants';
+import { PilotAction } from '../pilot.component';
 
 @Component({
-  selector: 'app-aircrafts-modal',
-  templateUrl: './aircrafts-modal.component.html',
-  styleUrls: ['./aircrafts-modal.component.scss']
+  selector: 'app-pilot-modal',
+  templateUrl: './pilot-modal.component.html',
+  styleUrls: ['./pilot-modal.component.scss']
 })
-export class AircraftsModalComponent implements OnInit {
+export class PilotModalComponent implements OnInit {
 
   // Constante for form
-  aircraftForm!: FormGroup;
-
-  // Constante for select pilots
-  selectPilots: User[] = [];
+  pilotForm!: FormGroup;
 
   // Variable for text in button submit
-  public textButtonSubmit: string = 'Crear Aeronave';
+  public textButtonSubmit: string = 'Crear Piloto';
 
   // Variable for loading data
   loading: boolean = false;
@@ -33,10 +28,9 @@ export class AircraftsModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private _msgBox: MsgBoxService,
-    private _aircraftService: AircraftsService,
     private _pilotService: PilotService,
-    @Inject(MAT_DIALOG_DATA) public data: AircraftAction,
-    public _dialogRef: MatDialogRef<AircraftsModalComponent>
+    @Inject(MAT_DIALOG_DATA) public data: PilotAction,
+    public _dialogRef: MatDialogRef<PilotModalComponent>
   ) { }
 
   ngOnInit(): void {
@@ -44,8 +38,6 @@ export class AircraftsModalComponent implements OnInit {
     this.initForm();
     // Validate data of parent
     this.validateData();
-    // Load pilots
-    this.loadSelectPilots();
   }
 
 
@@ -53,12 +45,11 @@ export class AircraftsModalComponent implements OnInit {
    * Method for init form
    */
   initForm() {
-    this.aircraftForm = this.fb.group({
-      code_ref: ['', Validators.required],
+    this.pilotForm = this.fb.group({
       name: ['', Validators.required],
-      cant_passagers: ['', Validators.required],
-      pilot_id: ['', Validators.required],
-
+      lastname: ['', Validators.required],
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.required],
     });
   }
 
@@ -69,11 +60,11 @@ export class AircraftsModalComponent implements OnInit {
    * @returns AbstractControl
    */
   public formField(field: any): AbstractControl | null {
-    return this.aircraftForm.get(field);
+    return this.pilotForm.get(field);
   }
 
   /**
-   * Method for create new aircraft
+   * Method for create new pilot
    * @param event: Event
    */
   public async onSubmit(event: Event) {
@@ -86,27 +77,27 @@ export class AircraftsModalComponent implements OnInit {
       // Send data for create
       if(this.data) {
         const dataSend = {
-          _id: this.data.aircraft._id,
-          ...this.aircraftForm.value
+          _id: this.data.pilot._id,
+          ...this.pilotForm.value
         }
-        const response = await this._aircraftService.updateAircraft(dataSend);
+        const response = await this._pilotService.updatePilot(dataSend);
         // If response is ok
         if (response.status) {
-          this._msgBox.Snack('Aeronave actualizada con éxito', 'X');
+          this._msgBox.Snack('Piloto actualizado con éxito', 'X');
           // Close modal
           this._dialogRef.close(true);
         }
       } else {
         // Send data for create
-        const response = await this._aircraftService.createAircraft(
+        const response = await this._pilotService.createPilot(
           {
-            is_available: false,
-            ...this.aircraftForm.value
+            rol: 'pilot',
+            ...this.pilotForm.value
           }
         );
         // If response is ok
         if (response.status) {
-          this._msgBox.Snack('Aeronave creada con éxito', 'X');
+          this._msgBox.Snack('Piloto creado con éxito', 'X');
           // Close modal
           this._dialogRef.close(true);
         }
@@ -125,32 +116,15 @@ export class AircraftsModalComponent implements OnInit {
       // If action is edit
       if (this.data.action === ACTIONS.UPDATE) {
         // rename button
-        this.textButtonSubmit = 'Editar aeronave';
+        this.textButtonSubmit = 'Editar piloto';
       }
 
       if (this.data.action === ACTIONS.PREVIEW) {
         // disable form
-        this.aircraftForm.disable();
+        this.pilotForm.disable();
       }
       // Set form value
-      this.aircraftForm.patchValue(this.data.aircraft);
-    }
-  }
-
-  /**
-   * Method for load pilots
-   */
-  public async loadSelectPilots(): Promise<any> {
-    // Launch loading
-    this.loading = true;
-    // Fetch pilots
-    const response = await this._pilotService.getPilots();
-    // If response is ok
-    if (response.status) {
-      // Set pilots
-      this.selectPilots = response.data; 
-      // Stop loading
-      this.loading = false;
+      this.pilotForm.patchValue(this.data.pilot);
     }
   }
 }

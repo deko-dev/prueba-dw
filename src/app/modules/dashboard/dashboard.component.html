@@ -12,6 +12,7 @@
                     }"
                     class="item-navigation w-10/12 h-12 mx-auto rounded-lg text-secondary-dark dark:text-secondary-light flex flex-row justify-start items-center gap-4 py-2 px-5 cursor-pointer" 
                     (click)="onRedirectTo(item.path)"
+                    *ngIf="validateItem(item.roles)"
                 >
                     <mat-icon class="w-6 h-6 text-2xl flex flex-col justify-center items-center">{{ item.icon }}</mat-icon>
                     <h3 class="m-0 text-sm sm:text-base md:text-lg font-semibold text-center">{{ item.name }}</h3>
