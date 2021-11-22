@@ -31,12 +31,6 @@ export const RolesList: Role[] = [
         profile: ProfilesList[1]
     },
     {
-        id: 'astronaut',
-        name: "Astronauta",
-        description: "Astronauta de una aeronave",
-        profile: ProfilesList[1]
-    },
-    {
         id: 'admin',
         name: "Administrador",
         description: "Administrador del sistema",

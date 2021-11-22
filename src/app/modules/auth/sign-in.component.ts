@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,7 +18,9 @@ export class SignInComponent implements OnInit {
   signInForm!: FormGroup;
     
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -51,15 +55,27 @@ export class SignInComponent implements OnInit {
    * @param event
    * @returns void
    */
-  public onSubmit(event: Event): void {
+  public async onSubmit(event: Event): Promise<any> {
     // Prevent default action
     event.preventDefault();
     // Stop propagation
     event.stopPropagation();
 
-    // TODO: Desconmentar el comido de abajo cuando se implemente el servicio de autenticación
     // Send data of sign in
-    console.log(this.signInForm.value);
+    try {
+      // Send login
+      const responseLogin = await this.authService.login(this.signInForm.value);
+      // Save token in local storage
+      localStorage.setItem('token', responseLogin.token);
+      // Save expiration date in local storage
+      localStorage.setItem('expire_in', responseLogin.expire_in);
+      // Save user in local storage
+      // localStorage.setItem('user', JSON.stringify(responseLogin.user));
+      // Redirect to dashboard
+      this.router.navigateByUrl('dashboard/roles');
+    } catch (error) {
+      
+    }
   }
 
 }

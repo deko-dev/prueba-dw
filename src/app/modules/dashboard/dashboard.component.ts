@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NavigationTypeItem } from 'src/app/utils/general-interfaces';
 import { Navigation } from 'src/app/utils/navigation/data';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +11,9 @@ import { Navigation } from 'src/app/utils/navigation/data';
 })
 export class DashboardComponent implements OnInit {
 
+  // Constant for version app
+  public readonly version: string  = environment.version;
+  
   // Constant for save the navigation items
   public readonly sidenavItems: NavigationTypeItem[] = Navigation;
 
@@ -44,4 +48,25 @@ export class DashboardComponent implements OnInit {
     // this._router.navigateByUrl(path);
   }
 
+  /**
+   * Method for back to the previous page
+   * @return void
+   */
+  public onBackPage(): void {
+    window.history.back();
+  }
+
+  /**
+   * Method for logout user
+   */
+  public onLogout(): void {
+    // Remove the token of local storage
+    localStorage.removeItem('token');
+    // Remove the expire time of local storage
+    localStorage.removeItem('expire_in');
+    // Remove data user of local storage
+    localStorage.removeItem('user');
+    // Redirect to the login page
+    this._router.navigateByUrl('/auth/sign-in');
+  }
 }

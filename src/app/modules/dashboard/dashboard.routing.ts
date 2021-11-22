@@ -3,8 +3,13 @@ import { NgModule } from '@angular/core';
 
 const routes: Routes = [
     {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'roles'
+    },
+    {
         path: 'roles',
-        loadChildren: () => import('./roles/roles.module').then(m => m.RolesModule)
+        loadChildren: () => import('./roles/roles.module').then(m => m.RolesModule),
     }
 ];
 

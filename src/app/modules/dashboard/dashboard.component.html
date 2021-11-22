@@ -17,16 +17,26 @@
                     <h3 class="m-0 text-sm sm:text-base md:text-lg font-semibold text-center">{{ item.name }}</h3>
                 </div>
             </ng-container>
-            
+            <div 
+                class="item-navigation w-10/12 h-12 mx-auto rounded-lg bg-secondary-light dark:bg-secondary-dark text-secondary-dark dark:text-secondary-light flex flex-row justify-start items-center gap-4 py-2 px-5 cursor-pointer " 
+                (click)="onLogout()"
+            >
+                <mat-icon class="w-6 h-6 text-2xl flex flex-col justify-center items-center">logout</mat-icon>
+                <h3 class="m-0 text-sm sm:text-base md:text-lg font-semibold text-center">Cerrar sesión</h3>
+            </div>
+            <span class="text-xs sm:text-sm md:text-base font-medium mt-auto text-secondary-dark dark:text-secondary-light">v{{ version }}</span>
         </div>
     </mat-drawer>
 
     <div>
-        <mat-toolbar class="bg-primary-light dark:bg-primary-dark pl-1">
+        <mat-toolbar class="bg-primary-light dark:bg-primary-dark pl-1 w-full pr-2">
             <button type="button" mat-icon-button (click)="drawer.toggle()">
                 <mat-icon class="text-secondary-dark dark:text-secondary-light">menu</mat-icon>
             </button>
-            <h2 class="text-xl sm:text-2xl font-bold text-primary-dark dark:text-primary-light">AeroAlquiler</h2>
+            <h2 class="text-xl sm:text-2xl font-bold text-primary-dark dark:text-primary-light m-0 ml-4">AeroAlquiler</h2>
+            <button type="button" mat-icon-button (click)="onBackPage()" class="ml-auto mr-10">
+                <mat-icon class="text-secondary-dark dark:text-secondary-light">arrow_back</mat-icon>
+            </button>
         </mat-toolbar>
 
         <router-outlet></router-outlet>
